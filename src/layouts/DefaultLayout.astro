@@ -1,0 +1,29 @@
+---
+// src/layouts/DefaultLayout.astro
+const { title = "Space Station OS" } = Astro.props;
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="font-sans bg-slate-50 text-gray-900 max-w-4xl mx-auto px-4 py-8">
+    <header class="mb-8 border-b pb-4">
+      <h1 class="text-3xl font-bold"><a href="/">Space Station OS</a></h1>
+      <nav class="mt-2">
+        <a class="mr-4 text-blue-600 hover:underline" href="/news">News</a>
+        <a class="mr-4 text-blue-600 hover:underline" href="/docs">Docs</a>
+        <a class="mr-4 text-blue-600 hover:underline" href="/modules">Modules</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="mt-12 text-sm text-gray-500">
+      © {new Date().getFullYear()} Space Station OS. All rights reserved.
+    </footer>
+  </body>
+</html>
+

@@ -1,0 +1,31 @@
+---
+// src/pages/news/index.astro
+import NewsItem from "../../components/NewsItem.astro";
+import DefaultLayout from "../../layouts/DefaultLayout.astro";
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+
+const newsDir = "./src/pages/news";
+const entries = fs
+  .readdirSync(newsDir)
+  .filter(f => f.endsWith(".mdx"))
+  .map(file => {
+    const filePath = path.join(newsDir, file);
+    const raw = fs.readFileSync(filePath, "utf-8");
+    const { data } = matter(raw);
+    return {
+      title: data.title,
+      date: data.date,
+      link: `/news/${file.replace(".mdx", "")}`
+    };
+  })
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+---
+<DefaultLayout title="SSOS News">
+  <h2 class="text-xl font-bold mb-4">Latest News</h2>
+  {entries.map(entry => (
+    <NewsItem title={entry.title} date={entry.date} link={entry.link} />
+  ))}
+</DefaultLayout>
+
